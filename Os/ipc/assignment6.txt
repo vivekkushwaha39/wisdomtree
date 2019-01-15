@@ -1,0 +1,107 @@
+Q1.Write a program to open a PIPE and try to write “CDAC” to
+pipe and read it from another end.
+
+Script
+#include<stdio.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<string.h>
+#define MAX_SIZE 1024
+int main(){
+
+  int pid;
+
+  int pipefd[2];
+
+  char buf[MAX_SIZE],buf1[MAX_SIZE];
+
+  pipe(pipefd);
+
+
+  strcpy(buf,"CDAC ");
+
+  write(pipefd[1],buf,MAX_SIZE);
+  close(pipefd[1]);
+  while(read(pipefd[0],buf1,MAX_SIZE)>0){
+    printf(buf);
+  }
+  close(pipefd[0]);
+
+  return 0;
+}
+
+
+
+Q2.Create two processes parent and child using fork() system call,
+establish a communication between parent and child using a
+PIPE.
+
+Script
+nclude<stdio.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<string.h>
+#define MAX_SIZE 1024
+int main(){
+
+  int pid;
+
+  int pipefd[2];
+
+  char buf[MAX_SIZE];
+
+  pipe(pipefd);
+
+  pid = fork();
+
+  if(pid == 0){
+    close(pipefd[1]);
+    while(read(pipefd[0],buf,MAX_SIZE)>0){
+      printf(buf);
+      break;
+    }
+
+    printf("Data i read is : %s \n", buf);
+    close(pipefd[0]);
+  }
+  else{
+    close(pipefd[0]);
+    strcpy(buf,"sample text ");
+    write(pipefd[1],buf,MAX_SIZE);
+   // wait(NULL);
+    close(pipefd[1]);
+  }
+
+  return 0;
+}
+~         
+
+
+Q3.Implement "ls | wc -l" in C using PIPE.
+
+Scrip
+#include<stdio.h>
+#include<unistd.h>
+int main(){
+
+  int fdes[2];
+  pipe(fdes);
+  int pidtmp;
+  int pid1 = fork();
+
+  if(pid1 == 0){
+    dup2(fdes[1],STDOUT_FILENO);
+    close(fdes[0]);
+    pidtmp = execlp("ls","ls" ,(char *)0);
+
+  }
+  else{
+
+      close(fdes[1]);
+      dup2(fdes[0],STDIN_FILENO);
+      execlp("wc","wc ","-l",(char *)0);
+      printf("Parent p is already running !! \n");
+  }
+
+  return 0;
+}

@@ -1,0 +1,278 @@
+#pgdac AUG17 Machine no.19 roll no. 7 and 71
+#assignment4 os
+
+Q1. Write a program using fork(), in which print name, roll no and birth-date of
+yours and your group mate separately in parent and child process created due
+to fork().
+
+#include <stdio.h>
+
+void main(){
+
+	int pid,ppid,fid;
+
+	fid = fork();
+
+	printf("Fork id : %d \n ",fid);
+
+	if (fid == 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Child process \n process id : %d \n parent id : %d \n",pid,ppid);
+		printf("Name : shivam \n Roll no : 71 \n DOB : 8-6-1995 \n");
+	}else if(fid > 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Parent process \n process id : %d \n parent id : %d \n",pid,ppid);
+		printf("Name : amey \n Roll no : 7 DOB : 2-4-1993 \n");
+	}else{
+		printf("Error forking process \n");
+	}
+	pause();
+}
+
+
+Q2.A Parent process, child 1, child 2
+
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(){
+
+	pid_t pid,ppid,fid;
+	int status;
+
+	fid = fork();
+
+
+	 if(fid > 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Parent process \n process id : %d \n parent id : %d \n",pid,ppid);
+		int f2id = fork();
+
+		if(f2id == 0){
+			ppid=getppid();
+			pid=getpid();
+			printf(" Child 2 process \n process id : %d \n parent id : %d \n",pid,ppid);
+		}
+		
+	}else if(fid == 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Child 1 process \n process id : %d \n parent id : %d \n",pid,ppid);
+	}else{
+		printf("Error forking process \n");
+		return 0;
+	}
+	pause();
+}
+
+Q2.c Child 1, parent process, child 2
+
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(){
+	pid_t pid,ppid,p1id;
+	int status;
+
+	p1id = fork();
+
+	 if(p1id > 0){
+		waitpid(p1id,&status,WUNTRACED | WCONTINUED);
+			ppid=getppid();
+			pid=getpid();
+			printf("Parent process \n process id : %d \n parent id : %d \n",pid,ppid);
+		int p2id = fork();
+		if(p2id == 0){
+			ppid=getppid();
+			pid=getpid();
+			printf(" Child 2 process \n process id : %d \n parent id : %d \n",pid,ppid);
+		}else if(p2id > 0){
+			//waitpid(p1id,&status,WUNTRACED | WCONTINUED);
+		//	waitpid(p2id,&status,WUNTRACED | WCONTINUED);
+		}
+		
+	}else if(p1id == 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Child 1 process \n process id : %d \n parent id : %d \n",pid,ppid);
+	}else{
+		printf("Error forking process \n");
+		return 0;
+	}
+	//pause();
+}
+
+Q2.d Child 1, child 2, parent process
+
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(){
+	pid_t pid,ppid,p1id;
+	int status;
+
+	p1id = fork();
+
+	 if(p1id > 0){
+		waitpid(p1id,&status,WUNTRACED | WCONTINUED);
+		int p2id = fork();
+		if(p2id == 0){
+			ppid=getppid();
+			pid=getpid();
+			printf(" Child 2 process \n process id : %d \n parent id : %d \n",pid,ppid);
+		}else if(p2id > 0){
+			waitpid(p2id,&status,WUNTRACED | WCONTINUED);
+			ppid=getppid();
+			pid=getpid();
+			printf("Parent process \n process id : %d \n parent id : %d \n",pid,ppid);
+		}
+		
+	}else if(p1id == 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Child 1 process \n process id : %d \n parent id : %d \n",pid,ppid);
+	}else{
+		printf("Error forking process \n");
+		return 0;
+	}
+}
+
+Q3. Create 5 children processes from a common parent and ensure that the parent
+terminates after cleaning all the terminated children using waitpid().
+
+#include <stdio.h>
+#include <sys/wait.h>
+
+void main(){
+
+	int pid,ppid,fid,status;
+
+	fid = fork();
+
+	if (fid >0){
+		waitpid(fid,&status,WUNTRACED | WCONTINUED);
+		int f1id = fork();
+		if (f1id > 0)
+		{
+			waitpid(f1id,&status,WUNTRACED | WCONTINUED);
+			int f2id = fork();
+			if (f2id > 0)
+			{
+				waitpid(f2id,&status,WUNTRACED | WCONTINUED);
+				int f3id = fork();
+				if (f3id > 0)
+				{
+					waitpid(f3id,&status,WUNTRACED | WCONTINUED);
+					int f4id = fork();
+					
+					if (f4id > 0)
+					{
+						waitpid(f4id,&status,WUNTRACED | WCONTINUED);
+						ppid=getppid();
+						pid=getpid();
+						printf("Parent process \n process id : %d \n parent id : %d \n",pid,ppid);
+					}else{
+						ppid=getppid();
+						pid=getpid();
+						printf("Child process5 \n process id : %d \n parent id : %d \n",pid,ppid);
+					}
+				}else{
+					ppid=getppid();
+					pid=getpid();
+					printf("Child process4 \n process id : %d \n parent id : %d \n",pid,ppid);
+				}
+			}else{
+				ppid=getppid();
+				pid=getpid();
+				printf("Child process3 \n process id : %d \n parent id : %d \n",pid,ppid);
+			}
+		}else{
+			ppid=getppid();
+			pid=getpid();
+			printf("Child process2 \n process id : %d \n parent id : %d \n",pid,ppid);
+		}
+	}else if(fid == 0){
+		ppid=getppid();
+		pid=getpid();
+		printf("Child process1 \n process id : %d \n parent id : %d \n",pid,ppid);
+	}else{
+		printf("Error forking process \n");
+	}
+
+}
+
+
+
+Q4. Create 5 processes but not from the same parent. It means each child creates a
+new process. Clean-up the children using waitpid().
+
+include <stdio.h>
+#include <sys/wait.h>
+
+void main(){
+
+	int pid,ppid,fid,status;
+
+	fid = fork();
+
+	if (fid == 0){
+		int f1id = fork();
+		if (f1id == 0)
+		{
+			int f2id = fork();
+			if (f2id == 0)
+			{
+				int f3id = fork();
+				if (f3id == 0)
+				{
+					int f4id = fork();
+					if (f4id == 0)
+					{
+						ppid=getppid();
+						pid=getpid();
+						printf("Child process5 \n process id : %d \n parent id : %d \n",pid,ppid);
+					}else{
+						waitpid(f4id,&status,WUNTRACED | WCONTINUED);
+						ppid=getppid();
+						pid=getpid();
+						printf("Child process4 \n process id : %d \n parent id : %d \n",pid,ppid);
+					}
+				}else{
+					waitpid(f3id,&status,WUNTRACED | WCONTINUED);
+					ppid=getppid();
+					pid=getpid();
+					printf("Child process3 \n process id : %d \n parent id : %d \n",pid,ppid);
+				}
+			}else{
+				waitpid(f2id,&status,WUNTRACED | WCONTINUED);
+				ppid=getppid();
+				pid=getpid();
+				printf("Child process2 \n process id : %d \n parent id : %d \n",pid,ppid);
+			}
+		}else{
+			waitpid(f1id,&status,WUNTRACED | WCONTINUED);
+			ppid=getppid();
+			pid=getpid();
+			printf("Child process1 \n process id : %d \n parent id : %d \n",pid,ppid);
+		}
+	}else if(fid > 0){
+		waitpid(fid,&status,WUNTRACED | WCONTINUED);
+		ppid=getppid();
+		pid=getpid();
+		printf("Parent process \n process id : %d \n parent id : %d \n",pid,ppid);
+	}else{
+		printf("Error forking process \n");
+	}
+
+}
+
+

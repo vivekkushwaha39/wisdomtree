@@ -1,0 +1,324 @@
+#pgdac AUG17 Machine no.19 roll no. 7 and 71
+#assignment 3 shell scripting
+
+Q1. date time username directory
+script
+#!/bin/bash
+# This script displays date, w, who, ls
+# File created in July 2017 by Sham
+#File name: test1.sh
+date
+ls -il
+whoami
+pwd
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q1.sh
+Mon Aug 21 11:07:42 IST 2017
+total 4
+57514 -rwxrwxrwx 1 dac DAC 133 Aug 21 11:07 q1.sh
+dac
+/home/dac/SAMPLE1/assignment3
+
+
+Q2. add two numbers, which are supplied as command line argument and if these two numbers are not given show error.
+script
+#!/bin/bash
+echo “Enter two integers!!”
+read -p "enter number one: " n1
+read -p "enter number two: " n2
+if [ -z $n1 ] || [ -z $n2 ]
+then
+echo "Show error"
+else
+var1=$[ $n1 + $n2 ]
+echo $var1
+fi
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q2.sh
+“Enter two integers!!”
+enter number one: 2
+enter number two: 3
+5
+dac@ACTS19:~/SAMPLE1/assignment3> ./q2.sh
+“Enter two integers!!”
+enter number one: 
+enter number two: 
+Show error
+dac@ACTS19:~/SAMPLE1/assignment3> ./q2.sh
+“Enter two integers!!”
+enter number one: 1
+enter number two: 
+Show error
+
+
+Q3. to print numbers as from 10 to 1 using while loop and for loop.
+script for while
+#!/bin/bash
+var1=10
+while [ $var1 -gt 0 ]
+do
+echo $var1
+var1=$[ $var1 - 1 ]
+done
+
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q3.sh
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+
+script for for
+#!/bin/bash
+#part8
+for (( i=10; i>0; i-- ))
+do
+echo " no : $i"
+done
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q3.sh
+ no : 10
+ no : 9
+ no : 8
+ no : 7
+ no : 6
+ no : 5
+ no : 4
+ no : 3
+ no : 2
+ no : 1
+
+Q4. Read a number from the keyboard and using until loop, print value from 1 to the
+given number
+script
+#!/bin/bash
+read -p "enter number one: " n1
+n2=1
+until [ $n1 -lt $n2 ]
+do
+echo "$n2"
+n2=$(( $n2+1 ))
+done'
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q4.sh
+enter number one: 7
+1
+2
+3
+4
+5
+6
+7
+
+Q5.  How to perform real number calculation in shell script and store result to third
+variable. Read 3 real number from keyboard and add.
+script
+#!/bin/bash
+read -p "enter number one: " n1
+read -p "enter number two: " n2
+read -p "enter number three: " n3
+if [ -z $n1 ] || [ -z $n2 ] || [ -z $n3 ]
+then
+echo "show error"
+else
+var1=$[ $n1 + $n2 + $n3 ]
+echo $var1
+fi
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> vi q5.sh
+dac@ACTS19:~/SAMPLE1/assignment3> ./q5.sh
+enter number one: 3
+enter number two: 4
+enter number three: 5
+12
+
+
+
+Q6.Write Script to find out biggest number from given three numbers. Numbers are
+supplied as command line argument. Print error if sufficient arguments are not
+supplied.
+
+ script
+#!/bin/bash
+echo “Enter two integers!!”
+read -p "enter number one: " n1
+read -p "enter number two: " n2
+read -p "enter number three: " n3
+if [ -z $n1 ] || [ -z $n2 ] || [ -z $n3 ]
+then
+echo "Show error"
+elif [ $n1 -gt $n2 ] && [ $n1 -gt $n3 ]
+then
+echo "$n1 is greater"
+elif [ $n2 -gt $n3 ]
+then
+echo "$n2 is greater"
+
+else
+echo "$n3 is greater"
+fi
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q6.sh
+“Enter two integers!!”
+enter number one: 3
+enter number two: 4
+enter number three: 5
+5 is greater
+dac@ACTS19:~/SAMPLE1/assignment3> ./q6.sh
+“Enter two integers!!”
+enter number one: 3
+enter number two: 5
+enter number three: 4
+5 is greater
+
+Q7. Write a script, using case statement to perform basic math operation as follows:
+addition (+), subtraction (-), multiplication (x) and division (/)
+
+ script
+#!/bin/bash
+read -p "first no: " n1
+read -p "second no: " n2
+
+echo "enter 1 for addition"
+echo "enter 2 for subtraction"
+echo "etter 3 for multiply"
+echo "enter 4 for division"
+
+read option
+
+case $option in
+
+1)
+echo $[ $n1 + $n2 ];;
+
+2)
+echo $[ $n1 - $n2 ];;
+
+3)
+echo $[ $n1 * $n2 ];;
+
+4)
+echo $[ $n1 / $n2 ];;
+
+*)
+echo invalid operation;;
+
+esac
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q7.sh
+first no: 4
+second no: 2
+enter 1 for addition
+enter 2 for subtraction
+etter 3 for multiply
+enter 4 for division
+3
+8
+dac@ACTS19:~/SAMPLE1/assignment3> ./q7.sh
+first no: 4
+second no: 2
+enter 1 for addition
+enter 2 for subtraction
+etter 3 for multiply
+enter 4 for division
+4
+2
+
+
+Q8. Write a program to read /etc/passwd file and check existence of user “noida”,
+display appropriate messages.
+
+script
+#!/bin/bash
+
+var=$[ cat /etc/passwd | grep $noida ]
+if [ -z $var ]
+then
+echo "noida not found"
+else
+echo "noida found : $var"
+fi
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ./q8.sh
+./q8.sh: line 3: cat /etc/passwd | grep  : division by 0 (error token is "/passwd | grep  ")
+noida not found
+
+Q9. Read two inputs from keyboard, compare the length of string, display the message.
+
+ script
+#!/bin/bash
+read -p "first string: " n1
+read -p "second string: " n2
+
+var1=$( echo $n1  |wc -m )
+var2=$( echo $n2  |wc -m )
+
+if [ $var1 -gt $var2 ]
+then
+echo "string1 is greater"
+
+elif [ $var1 -lt $var2 ]
+then
+echo "string2 is greater"
+
+else echo "both strings are equal"
+
+
+fi
+
+
+
+reult
+dac@ACTS19:~/SAMPLE1/assignment3> ./q9.sh
+first string: bjfdjhsdffbjksdfdfjkl
+second string: nnfn
+string1 is greater
+dac@ACTS19:~/SAMPLE1/assignment3> 
+
+
+Q10. Create an empty file. Read path & filename from command line. Verify the file is
+empty or has data.
+
+script
+#!/bin/bash
+read -p "file name is: " filename
+
+if [-e $filename ]
+then
+echo "file exists"
+
+elif [ -s $filename ]
+then
+echo "file is not empty"
+
+else
+echo "file is empty"
+
+fi
+
+
+
+result
+dac@ACTS19:~/SAMPLE1/assignment3> ls
+1  assignment3.txt  q10.sh  q1.sh  q2.sh  q3.sh  q4.sh  q5.sh  q6.sh  q7.sh  q8.sh  q9.sh
+dac@ACTS19:~/SAMPLE1/assignment3> ./q10.sh
+file name is: q1.sh
+./q10.sh: line 4: [-e: command not found
+file is not empty
+
+
