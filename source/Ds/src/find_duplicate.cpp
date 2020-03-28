@@ -7,7 +7,7 @@ void printArr(vector<int> &arr){
     }
     cout << endl;
 }
-int main() {
+void temp_main() {
     vector<int> x = {1,2,3,44,5 , 44 , 1 };
     // for ( vector<int>::iterator it1 = x.begin(); it1 != x.end() ; it1++ ){
     //     for ( vector<int>::iterator it2 = it1+1 ; it2 != x.end() ; it2++ ){
