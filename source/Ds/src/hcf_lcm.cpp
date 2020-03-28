@@ -10,7 +10,7 @@ int findHcf(int num1, int num2){
 	while ( num1 ){
 		int temp = num1;
 		num1 = num1%num2;
-		num2 = num1;
+		num2 = temp;
 	}
 
 	return num2;

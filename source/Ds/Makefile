@@ -18,7 +18,7 @@ builddir:
 	
 objs/%.o : %.cpp
 	echo "compiling $^"
-	g++ -c $^ -o $@ $(INC_DIR)
+	g++ -c $< -o $@ $(INC_DIR)
 
 clean:
 	echo "cleaning"
