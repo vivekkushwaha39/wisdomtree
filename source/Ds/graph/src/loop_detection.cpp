@@ -1,5 +1,7 @@
 #include "loop_detection.h"
+#include <iostream>
 using namespace std;
+
 Graph::Graph(int v)
 {
 	this->adjMat = new vector<int> [v];
@@ -20,38 +22,64 @@ void Graph::findLoop()
 {
 	unordered_map<int, int> degree;
 	queue<int> leaves;
-	int visited[numVer] = { 0 };
+	int visited[numVer] =
+	{ 0 };
 
 	/**
 	 *  Calculate degree of original graph
 	 */
-	for (int i; i < numVer; i++)
+	for (int i=0; i < numVer; i++)
 	{
 		degree[i] = adjMat[i].size();
 	}
-
-	// Find the leaf nodes from graph
-	for (int i = 0; i < numVer; i++)
+	while (true)
 	{
-		if (visited[i] == 0 && degree.at(i) == 1)
+//----------------------------------------------------
+// Everything happening in this block removes
+// all current leaf nodes and revels new leaf nodes
+//----------------------------------------------------
+
+		// Find the leaf nodes from graph
+		for (int i = 0; i < numVer; i++)
 		{
-			leaves.push(i);
+			if (visited[i] == 0 && degree.at(i) == 1)
+			{
+				leaves.push(i);
+			}
 		}
+
+		if ( leaves.empty() )
+		{
+			break;
+		}
+		while (leaves.empty() == false)
+		{
+			int temp = leaves.front();
+			leaves.pop();
+			// Reduce the degree of connected nodes
+			for (int i = 0; i < adjMat[temp].size(); i++)
+			{
+				int tmpdeg = degree[adjMat[temp][i]];
+				tmpdeg--;
+				degree[adjMat[temp][i]] = tmpdeg;
+			}
+			// mark as visited
+			visited[temp] = 1;
+		}
+
+//----------------------------------------------
+// End of this block all current leaf nodes will
+// be removed repeat this until all are removed
+//----------------------------------------------
 	}
 
-	while (leaves.empty() == false)
+// Print the remaining nodes which are not visited
+	for (int i = 0; i < this->numVer; i++)
 	{
-		int temp = leaves.front();
-		leaves.pop();
-		// Reduce the degree of connected nodes
-		for (int i = 0; i < adjMat[temp].size(); i++)
+		if ( !visited[i] )
 		{
-			int tmpdeg = degree[adjMat[temp][i]];
-			tmpdeg--;
-			degree[adjMat[temp][i]] = tmpdeg;
+			cout << i << ", ";
 		}
-		// mark as visited
-		visited[temp] = 1;
 	}
 
 }
@@ -78,6 +106,7 @@ int detectLoop(int ac, char **av)
 	g.addEdge(3, 4);
 	g.addEdge(3, 5);
 	g.addEdge(4, 6);
+	g.findLoop();
 
 	return 0;
 }
