@@ -6,7 +6,7 @@ $(TARGET): $(OBJS)
 	mkdir -p output/
 	$(shell ar r $(TARGET) $(OBJS)  )
 
-all: $(TARGET) 
+all: builddir $(TARGET) 
 	$(MAKE) -C graph
 clean:
 	$(MAKE) -C graph clean
