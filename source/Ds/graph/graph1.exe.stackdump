@@ -1,0 +1,6 @@
+Exception: STATUS_ACCESS_VIOLATION at eip=00000001
+eax=00000000 ebx=0062CC8C ecx=80000008 edx=00000005 esi=61312E2F edi=61312E39
+ebp=00000001 esp=0062CC50 program=C:\Users\vivekk4\verifone-workspace\wisdomtree\source\ds\graph\output\graph1.exe, pid 2214, thread main
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args

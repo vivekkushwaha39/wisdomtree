@@ -4,6 +4,7 @@ OBJDIRS := $(shell echo $(OBJS)|xargs dirname |sort|uniq )
 
 INC_DIR=-I./include
 
+
 all: builddir $(TARGET)
 	@echo "-----------------------------------"
 	@echo "Building $(TARGET)"

@@ -1,6 +1,6 @@
+build_dirs := problems Ds
+
 all:
-	make -C Ds
-	make -C problems
+	$(foreach dr,$(build_dirs), $(MAKE) -C $(dr) all ; )
 clean:
-	make -C Ds clean
-	make -C problems clean
+	$(foreach dr,$(build_dirs), $(MAKE) -C $(dr) clean ; )
