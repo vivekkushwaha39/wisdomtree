@@ -6,7 +6,7 @@ INC_DIRS := $(patsubst %, -I%/include, $(ALL_MODULE_DIR) )
 INC_DIRS += -I./include
 
 LIB_DIRS := $(patsubst %, -L%/output, $(ALL_MODULE_DIR) )
-LIB_DIRS += -L./libs
+#LIB_DIRS += -L/mingw64/lib
 
 SRCS := $(shell find ./ -name "*.cpp" -type f)
 OBJS := $(patsubst %.cpp, objs/%.o, $(SRCS) )
